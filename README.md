@@ -7,6 +7,11 @@ Windows tools to write a Raspberry Pi image to an SD card, always using the late
 
 Requirements: Windows 10/11. RaspberryFlash needs administrator rights (it asks for them when started).
 
+User guides:
+- Complete guide with screenshots: [English](docs/user-guide-en.html) · [Italiano](docs/user-guide-it.html) – PDF: [English](docs/RaspberryFlash-Guide-EN.pdf) · [Italiano](docs/RaspberryFlash-Guide-IT.pdf)
+- RaspberryFlash only: [English](docs/raspberry-flash-en.html) · [Italiano](docs/raspberry-flash-it.html)
+- ManifestMaker only: [English](docs/manifest-maker-en.html) · [Italiano](docs/manifest-maker-it.html)
+
 ## How it works
 
 The server holds the image and a small `manifest.json` in the same folder:

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manifest Maker – User Guide</title>
+<style>
+  :root {
+    --green: #1fae23;
+    --green-dark: #158a18;
+    --green-soft: #e9f8ea;
+    --warn: #b85c00;
+    --warn-soft: #fff4e5;
+    --ink: #1b2127;
+    --muted: #6b757e;
+    --line: #dfe3e6;
+    --bg-alt: #f5f7f8;
+    --mono: ui-monospace, Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: #fff; }
+  body {
+    margin: 0 auto;
+    max-width: 820px;
+    padding: 40px 24px 60px;
+    font: 15px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    color: var(--ink);
+    background: #fff;
+  }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 16px; margin-bottom: 24px; }
+  header .lang { float: right; font-size: 13px; }
+  h1 { font-size: 30px; margin: 0 0 4px; line-height: 1.2; }
+  header p { margin: 0; color: var(--muted); }
+  h2 {
+    font-size: 21px; margin: 36px 0 12px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line); color: var(--green-dark);
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; }
+  a { color: var(--green-dark); }
+  code, pre { font-family: var(--mono); font-size: 13px; }
+  code { background: var(--bg-alt); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-alt); }
+  td:first-child { width: 36%; }
+  .note, .warn { border-left: 4px solid var(--green); background: var(--green-soft); padding: 10px 14px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+  .warn { border-color: var(--warn); background: var(--warn-soft); }
+  .note p, .warn p { margin: 0; }
+  ol.steps > li { margin-bottom: 10px; }
+  .toc ol { columns: 2; padding-left: 20px; margin: 8px 0; }
+  .ui { font-weight: 600; white-space: nowrap; }
+  dl dt { font-weight: 600; margin-top: 12px; }
+  dl dd { margin: 2px 0 0 0; }
+  footer { margin-top: 48px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+  .print-btn {
+    display: inline-block; margin-top: 12px; padding: 6px 14px; font: inherit; font-size: 13px;
+    border: 1px solid var(--green); color: var(--green-dark); background: #fff; border-radius: 6px; cursor: pointer;
+  }
+
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  @media print {
+    body { max-width: none; padding: 0; font-size: 10.5pt; }
+    h1 { font-size: 22pt; }
+    h2 { font-size: 14pt; margin-top: 20pt; break-after: avoid; }
+    h3 { break-after: avoid; }
+    a { color: inherit; text-decoration: none; }
+    .print-btn, header .lang { display: none; }
+    table, pre, .note, .warn, li, dl dt, dl dd { break-inside: avoid; }
+    tr { break-inside: avoid; }
+    .page-break { break-before: page; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="lang" href="manifest-maker-it.html">Versione italiana</a>
+  <h1>Manifest Maker – User Guide</h1>
+  <p>Publishing a new image for Raspberry Flash · ManifestMaker 1.0</p>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</header>
+
+<p>Manifest Maker creates the <code>manifest.json</code> file that tells Raspberry Flash which image is current. Upload it to the server next to the image, and every Raspberry Flash using that server picks up the new image the next time someone presses <span class="ui">Flash</span>.</p>
+<p>This guide is for whoever maintains the images on the server. For writing SD cards, see the <a href="raspberry-flash-en.html">Raspberry Flash guide</a>.</p>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#publish">Publishing a new image</a></li>
+    <li><a href="#window">The Manifest Maker window</a></li>
+    <li><a href="#manifest">The manifest file</a></li>
+    <li><a href="#check">Checking the publication</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ol>
+</nav>
+
+<h2 id="requirements">1. Requirements</h2>
+<ul>
+  <li>Windows 10 or Windows 11. No administrator rights and no installation needed: just run <code>ManifestMaker.exe</code>.</li>
+  <li>The image file on your PC – the same file you upload to the server.</li>
+  <li>A web server folder reachable over <code>http://</code> or <code>https://</code> where you can upload files (FTP, web panel, cloud storage with public links…).</li>
+</ul>
+<div class="note"><p>If the server supports partial downloads (HTTP Range requests, as almost all web servers do), Raspberry Flash can resume interrupted downloads of large images.</p></div>
+
+<h2 id="how">2. How it works</h2>
+<p>The server folder holds the image and <code>manifest.json</code>:</p>
+<pre><code>https://drive.example.com/
+├── manifest.json
+├── solaria231026.img      ← previous image (optional)
+└── solaria151126.img      ← current image</code></pre>
+<p>Raspberry Flash reads <code>manifest.json</code>, finds the name of the current image, and downloads it unless a file with <strong>that same name</strong> is already in its local cache. Publishing a new image therefore means: upload the image under a new name, then replace <code>manifest.json</code>.</p>
+
+<h2 id="publish" class="page-break">3. Publishing a new image</h2>
+<ol class="steps">
+  <li><strong>Give the image a new file name</strong>, e.g. <code>solaria151126.img</code>. Including a date or version number in the name is the easiest way to keep names unique.
+    <div class="warn"><p>Raspberry Flash recognises images <strong>by file name only</strong>. If you upload a changed image under a name that was already used, PCs that have that name in their cache keep writing the old copy.</p></div></li>
+  <li><strong>Upload the image</strong> to the server folder and wait for the upload to finish completely.
+    <div class="note"><p>Upload the image <em>before</em> the manifest. This way nobody is ever sent to an image that is not there yet. With FTP, use binary transfer mode.</p></div></li>
+  <li><strong>Start ManifestMaker.exe</strong> and press <span class="ui">Browse...</span> to select the same image on your PC.</li>
+  <li><strong>Check Version.</strong> It is filled in from the last group of digits in the file name (<code>solaria151126.img</code> → <code>151126</code>). Change it if needed.</li>
+  <li><strong>Keep “Include SHA-256 checksum” ticked.</strong> Raspberry Flash then checks every download and rejects corrupted files.</li>
+  <li><strong>Press Create manifest.</strong> A save dialog opens in the image's folder, with the name <code>manifest.json</code> already filled in. Press <span class="ui">Save</span>.<br>
+    If the checksum is enabled, the progress bar shows how far the calculation has got; this takes a little while for large images. <span class="ui">Cancel</span> stops it.</li>
+  <li>When the message <strong>“Manifest saved … Upload it next to …”</strong> appears, <strong>upload <code>manifest.json</code></strong> to the same server folder, replacing the old one.</li>
+</ol>
+<p>That's it: from the next press of <span class="ui">Flash</span>, every Raspberry Flash using that base URL downloads the new image.</p>
+
+<h2 id="window">4. The Manifest Maker window</h2>
+<table>
+  <tr><th>Item</th><th>What it does</th></tr>
+  <tr><td><span class="ui">Image file</span> + <span class="ui">Browse...</span></td><td>The image to publish. Accepted types: <code>.img</code>, <code>.xz</code>, <code>.gz</code>, <code>.bz2</code>, <code>.zip</code> (choose <em>All files</em> in the dialog to see others).</td></tr>
+  <tr><td><span class="ui">Version</span></td><td>A free label, filled in automatically from the file name. Raspberry Flash shows it in its log (<em>Available version: …</em>); it does not decide what is downloaded.</td></tr>
+  <tr><td><span class="ui">Include SHA-256 checksum</span></td><td>Adds a fingerprint of the file to the manifest so that damaged downloads are detected. Recommended.</td></tr>
+  <tr><td>Progress bar and status line</td><td>Show the checksum calculation and the result.</td></tr>
+  <tr><td><span class="ui">Create manifest</span> / <span class="ui">Cancel</span></td><td>Create and save <code>manifest.json</code>; stop a calculation in progress.</td></tr>
+</table>
+
+<h2 id="manifest">5. The manifest file</h2>
+<p>Manifest Maker writes a small text file like this:</p>
+<pre><code>{
+  "version": "151126",
+  "image": "solaria151126.img",
+  "sha256": "3f5a…"
+}</code></pre>
+<table>
+  <tr><th>Field</th><th>Meaning</th></tr>
+  <tr><td><code>version</code></td><td>Label shown to the user. Optional.</td></tr>
+  <tr><td><code>image</code></td><td>Name of the image in the same folder as the manifest. Required. It can also be edited by hand into a full URL (<code>https://…</code>) if the image lives in another folder or on another server.</td></tr>
+  <tr><td><code>sha256</code></td><td>Checksum of the image file exactly as uploaded. Optional; if present, Raspberry Flash rejects downloads that do not match.</td></tr>
+</table>
+<div class="note"><p>Compressed images (e.g. <code>.img.xz</code>) download faster and are decompressed by Raspberry Flash while writing. The checksum is of the compressed file – just select the file you upload.</p></div>
+
+<h2 id="check">6. Checking the publication</h2>
+<ol>
+  <li>Open the base URL followed by <code>manifest.json</code> in a browser (e.g. <code>https://drive.example.com/manifest.json</code>): you should see the new contents. If you still see the old one, the browser or server may be caching it – reload after a moment.</li>
+  <li>Start Raspberry Flash with that base URL and press <span class="ui">Flash</span>: the log shows <em>Available version: …</em> with the new name, followed by <em>Downloading …</em>.</li>
+</ol>
+
+<h2 id="trouble" class="page-break">7. Troubleshooting</h2>
+<table>
+  <tr><th>Message / problem</th><th>Cause and solution</th></tr>
+  <tr><td><em>Please select an image file.</em> (Manifest Maker)</td><td>No file was chosen, or it was moved. Press <span class="ui">Browse...</span> again.</td></tr>
+  <tr><td>Raspberry Flash: <em>Cannot read manifest.json: HTTP 404</em></td><td><code>manifest.json</code> is not in the folder of the base URL, or the file name is different (it must be exactly <code>manifest.json</code>, lower case).</td></tr>
+  <tr><td>Raspberry Flash: <em>manifest.json is not valid JSON</em> / <em>has no "image" entry</em></td><td>The file was edited by hand incorrectly or truncated during upload. Create it again with Manifest Maker.</td></tr>
+  <tr><td>Raspberry Flash: <em>Download failed: HTTP 404</em></td><td>The image named in the manifest is not on the server, or its name differs (check upper/lower case). Upload it, or recreate the manifest from the file actually uploaded.</td></tr>
+  <tr><td>Raspberry Flash: <em>Downloaded image is corrupted (checksum mismatch)</em> on every PC</td><td>The manifest was made from a different file than the one on the server, or the upload was damaged (e.g. FTP in text mode). Upload the image again and recreate the manifest from that same file.</td></tr>
+  <tr><td>PCs keep writing the old image</td><td>The new image was uploaded with a name that was already used. Rename it, upload it, and recreate the manifest.</td></tr>
+</table>
+
+<h2 id="faq">8. FAQ</h2>
+<dl>
+  <dt>How do I go back to an earlier image?</dt>
+  <dd>Keep the previous image on the server. To roll back, create a manifest for it with Manifest Maker and upload it. PCs that still have it in their cache will not even need to download it again.</dd>
+  <dt>Can I delete old images from the server?</dt>
+  <dd>Yes, once they are no longer named in the manifest. Keeping the previous one makes a rollback quick.</dd>
+  <dt>Can I serve several products from one server?</dt>
+  <dd>Yes – use a separate folder, each with its own image and <code>manifest.json</code>. Each folder is a different base URL in Raspberry Flash.</dd>
+  <dt>Is the checksum required?</dt>
+  <dd>No, but without it a damaged download is only noticed when the Raspberry Pi fails to start.</dd>
+</dl>
+
+<footer>© 2026 Steplab – <a href="https://www.steplab.net">www.steplab.net</a> – <a href="mailto:info@steplab.net">info@steplab.net</a></footer>
+
+</body>
+</html>

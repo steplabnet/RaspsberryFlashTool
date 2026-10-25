@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raspberry Flash – User Guide</title>
+<style>
+  :root {
+    --green: #1fae23;
+    --green-dark: #158a18;
+    --green-soft: #e9f8ea;
+    --warn: #b85c00;
+    --warn-soft: #fff4e5;
+    --ink: #1b2127;
+    --muted: #6b757e;
+    --line: #dfe3e6;
+    --bg-alt: #f5f7f8;
+    --mono: ui-monospace, Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: #fff; }
+  body {
+    margin: 0 auto;
+    max-width: 820px;
+    padding: 40px 24px 60px;
+    font: 15px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    color: var(--ink);
+    background: #fff;
+  }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 16px; margin-bottom: 24px; }
+  header .lang { float: right; font-size: 13px; }
+  h1 { font-size: 30px; margin: 0 0 4px; line-height: 1.2; }
+  header p { margin: 0; color: var(--muted); }
+  h2 {
+    font-size: 21px; margin: 36px 0 12px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line); color: var(--green-dark);
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; }
+  a { color: var(--green-dark); }
+  code, pre { font-family: var(--mono); font-size: 13px; }
+  code { background: var(--bg-alt); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-alt); }
+  td:first-child { width: 36%; }
+  .note, .warn { border-left: 4px solid var(--green); background: var(--green-soft); padding: 10px 14px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+  .warn { border-color: var(--warn); background: var(--warn-soft); }
+  .note p, .warn p { margin: 0; }
+  ol.steps > li { margin-bottom: 10px; }
+  .toc ol { columns: 2; padding-left: 20px; margin: 8px 0; }
+  .ui { font-weight: 600; white-space: nowrap; }
+  dl dt { font-weight: 600; margin-top: 12px; }
+  dl dd { margin: 2px 0 0 0; }
+  footer { margin-top: 48px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+  .print-btn {
+    display: inline-block; margin-top: 12px; padding: 6px 14px; font: inherit; font-size: 13px;
+    border: 1px solid var(--green); color: var(--green-dark); background: #fff; border-radius: 6px; cursor: pointer;
+  }
+
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  @media print {
+    body { max-width: none; padding: 0; font-size: 10.5pt; }
+    h1 { font-size: 22pt; }
+    h2 { font-size: 14pt; margin-top: 20pt; break-after: avoid; }
+    h3 { break-after: avoid; }
+    a { color: inherit; text-decoration: none; }
+    .print-btn, header .lang { display: none; }
+    table, pre, .note, .warn, li, dl dt, dl dd { break-inside: avoid; }
+    tr { break-inside: avoid; }
+    .page-break { break-before: page; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="lang" href="raspberry-flash-it.html">Versione italiana</a>
+  <h1>Raspberry Flash – User Guide</h1>
+  <p>Writing Raspberry Pi SD cards on Windows · RaspberryFlash 1.1</p>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</header>
+
+<p>Raspberry Flash writes a Raspberry Pi image to an SD card on Windows. It always takes the latest image published on your web server, so you only need to know the server address: when a new image is published, it is picked up automatically.</p>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#write">Writing an SD card</a></li>
+    <li><a href="#options">Options</a></li>
+    <li><a href="#files">Files next to the program</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ol>
+</nav>
+
+<h2 id="requirements">1. Requirements</h2>
+<ul>
+  <li>Windows 10 or Windows 11.</li>
+  <li>An SD card reader (built-in or USB) and an SD card at least as large as the image.</li>
+  <li>An internet connection the first time each new image is downloaded.</li>
+  <li><strong>Administrator rights</strong>: writing a card bypasses the file system, which Windows only allows to administrators. When you start the program, Windows asks for permission (UAC prompt) – answer <span class="ui">Yes</span>.</li>
+</ul>
+<p>No installation is needed: copy <code>RaspberryFlash.exe</code> to a folder of your choice and run it. Pick a folder where you can write files (e.g. <code>Documents\RaspberryFlash</code>), because the program stores its settings and downloaded images next to itself.</p>
+
+<h2 id="how">2. How it works</h2>
+<p>The server address you enter (the <em>base URL</em>) is a folder holding the image and a small file named <code>manifest.json</code> that says which image is current. When you press <span class="ui">Flash</span>, Raspberry Flash:</p>
+<ol>
+  <li>reads <code>manifest.json</code> from the base URL;</li>
+  <li>checks whether the image named there is already in its local <code>cache</code> folder;</li>
+  <li>downloads it if it is not (resuming any interrupted download);</li>
+  <li>erases the selected SD card and writes the image to it;</li>
+  <li>optionally reads the card back to verify it.</li>
+</ol>
+
+<h2 id="write" class="page-break">3. Writing an SD card</h2>
+<p>The main window contains, from top to bottom:</p>
+<ul>
+  <li><span class="ui">Base URL</span> – server address, with <span class="ui">Save</span> and <span class="ui">Remove</span> buttons</li>
+  <li><span class="ui">SD card</span> – the card to write, with a <span class="ui">Refresh</span> button</li>
+  <li>the <span class="ui">Verify after writing</span> and <span class="ui">Show all non-system disks</span> options</li>
+  <li>two progress bars, <span class="ui">Download</span> and <span class="ui">Write</span></li>
+  <li>a status line and a log of what the program is doing</li>
+  <li>the <span class="ui">About</span>, <span class="ui">Flash</span> and <span class="ui">Cancel</span> buttons</li>
+</ul>
+
+<h3>Step by step</h3>
+<ol class="steps">
+  <li><strong>Insert the SD card</strong> into the reader.</li>
+  <li><strong>Start RaspberryFlash.exe</strong> and accept the Windows administrator prompt.</li>
+  <li><strong>Enter the Base URL</strong> – the server folder that contains <code>manifest.json</code>, for example <code>https://drive.example.com/</code>.<br>
+    Press <span class="ui">Save</span> to add it to the drop-down list so you can pick it next time. Use <span class="ui">Remove</span> to delete the selected address from the list.</li>
+  <li><strong>Select the card</strong> in <span class="ui">SD card</span>. Each entry shows disk number, name, size and connection type, e.g.
+    <code>Disk 3: Generic STORAGE DEVICE [29.7 GB, USB]</code>. If the card is not listed, press <span class="ui">Refresh</span>.
+    <div class="note"><p>Check the size: it must match your SD card. If in doubt, remove the card, press <span class="ui">Refresh</span>, and see which entry disappears.</p></div></li>
+  <li><strong>Press Flash.</strong> A warning shows which disk is going to be erased. Read it carefully and press <span class="ui">Yes</span> to continue.
+    <div class="warn"><p><strong>Everything on the selected card is erased.</strong> This cannot be undone.</p></div></li>
+  <li><strong>Wait.</strong> The <span class="ui">Download</span> bar fills while the image is downloaded (it shows full immediately if the image is already in the cache). The <span class="ui">Write</span> bar then shows writing and, if enabled, verifying. Speed and progress also appear in the status line.</li>
+  <li>When the message <strong>“SD card written successfully. You can remove it.”</strong> appears, press <span class="ui">OK</span> and remove the card. It is ready to go into the Raspberry Pi.</li>
+</ol>
+<p>To stop at any moment, press <span class="ui">Cancel</span>. A cancelled download resumes next time; a cancelled write leaves the card unusable until it is written again.</p>
+<div class="note"><p>After writing, Windows may show <em>“You need to format the disk before you can use it”</em>. This is normal: Raspberry Pi uses partitions Windows cannot read. Press <span class="ui">Cancel</span> – <strong>do not format</strong>.</p></div>
+
+<h3>Writing several cards</h3>
+<p>Insert the next card, press <span class="ui">Refresh</span>, select it and press <span class="ui">Flash</span>. The image is downloaded only once and then reused from the cache.</p>
+
+<h2 id="options">4. Options</h2>
+<dl>
+  <dt>Verify after writing (on by default, recommended)</dt>
+  <dd>After writing, the program reads the whole card back and compares it with the image. It roughly doubles the time but detects faulty or counterfeit cards before they go into a device. The setting is remembered.</dd>
+  <dt>Show all non-system disks</dt>
+  <dd>Normally only USB, SD and MMC disks are listed. Tick this if your reader is not detected as such (some internal readers). The Windows system disk is never listed, but other internal or external hard disks may be – <strong>make sure you select the right one.</strong></dd>
+  <dt>Direct image link</dt>
+  <dd>Instead of a base URL you can enter a direct link to an image file ending in <code>.img</code>, <code>.img.xz</code>, <code>.img.gz</code>, <code>.img.bz2</code> or <code>.zip</code>. Compressed images are decompressed while writing; there is no need to unpack them first.</dd>
+  <dt>About</dt>
+  <dd>Shows the program revision and contact details.</dd>
+</dl>
+
+<h2 id="files">5. Files next to the program</h2>
+<table>
+  <tr><th>File / folder</th><th>Contents</th></tr>
+  <tr><td><code>cache\</code></td><td>Downloaded images. Delete old images to free space; they are downloaded again if needed.</td></tr>
+  <tr><td><code>cache\*.part</code>, <code>*.part.json</code></td><td>An unfinished download. Pressing <span class="ui">Flash</span> resumes it.</td></tr>
+  <tr><td><code>config.json</code></td><td>Settings: last URL, saved URLs, verify option. Delete it to reset the program.</td></tr>
+</table>
+
+<h2 id="trouble" class="page-break">6. Troubleshooting</h2>
+<table>
+  <tr><th>Message / problem</th><th>Cause and solution</th></tr>
+  <tr><td><em>Administrator rights are required to write to the SD card.</em></td><td>The Windows prompt was refused. Restart the program and answer <span class="ui">Yes</span>; on company PCs you may need an administrator account.</td></tr>
+  <tr><td><em>No SD card found. Insert one and press Refresh.</em></td><td>Insert the card, wait a few seconds, press <span class="ui">Refresh</span>. If the reader is internal, try <span class="ui">Show all non-system disks</span>.</td></tr>
+  <tr><td><em>Please enter a valid http(s) URL.</em></td><td>The address must start with <code>http://</code> or <code>https://</code>.</td></tr>
+  <tr><td><em>Cannot read manifest.json: HTTP 404 …</em></td><td>Wrong base URL, or the image has not been published there yet. Check the address with whoever publishes the images.</td></tr>
+  <tr><td><em>Cannot read manifest.json: …</em> (no HTTP code)</td><td>No connection to the server: check the internet connection, proxy or firewall.</td></tr>
+  <tr><td><em>manifest.json is not valid JSON</em> / <em>has no "image" entry</em> / <em>Download failed: HTTP 404 …</em></td><td>A problem on the server side. Tell whoever publishes the images.</td></tr>
+  <tr><td><em>Connection problem …; retrying in 5s</em></td><td>Temporary network fault; the program retries by itself. If it gives up, press <span class="ui">Flash</span> again: the download resumes where it stopped.</td></tr>
+  <tr><td><em>Downloaded image is corrupted (checksum mismatch).</em></td><td>The download was damaged and has been deleted; press <span class="ui">Flash</span> to download again. If it happens every time, tell whoever publishes the images.</td></tr>
+  <tr><td><em>Image (…) is larger than the card (…)</em></td><td>Use a larger SD card.</td></tr>
+  <tr><td><em>diskpart failed</em></td><td>The card is write-protected (check the small lock switch on the side of the card or adapter), or another program is using it. Close Explorer windows on the card and try again.</td></tr>
+  <tr><td><em>Verification failed …</em></td><td>The card did not store the data correctly. Try again; if it fails again, the card or the reader is faulty – replace it.</td></tr>
+  <tr><td>An old image is still being written</td><td>Delete the old image from the <code>cache</code> folder and press <span class="ui">Flash</span> again.</td></tr>
+  <tr><td>Windows asks to format the card after writing</td><td>Normal – press <span class="ui">Cancel</span>, do not format.</td></tr>
+</table>
+<p>The log in the main window shows every step with the time; it is useful to copy it when asking for help.</p>
+
+<h2 id="faq">7. FAQ</h2>
+<dl>
+  <dt>Is it free?</dt>
+  <dd>Yes, Raspberry Flash is free to download and use.</dd>
+  <dt>How do I know which version I am writing?</dt>
+  <dd>The log shows <em>Available version: …</em> with the image name each time you press <span class="ui">Flash</span>.</dd>
+  <dt>Can I use it offline?</dt>
+  <dd>Reading <code>manifest.json</code> needs a connection. Without one, enter a direct link to the image instead: if a file with that name is already in the cache, it is used without downloading.</dd>
+  <dt>Does the card shrink after writing?</dt>
+  <dd>Windows only sees the small boot partition, so the card looks smaller. The full capacity is still there and is used by the Raspberry Pi.</dd>
+  <dt>How are new images published?</dt>
+  <dd>With Manifest Maker – see the <a href="manifest-maker-en.html">Manifest Maker guide</a>.</dd>
+</dl>
+
+<footer>© 2026 Steplab – <a href="https://www.steplab.net">www.steplab.net</a> – <a href="mailto:info@steplab.net">info@steplab.net</a></footer>
+
+</body>
+</html>

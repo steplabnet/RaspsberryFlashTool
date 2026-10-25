@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raspberry Flash – Guida utente</title>
+<style>
+  :root {
+    --green: #1fae23;
+    --green-dark: #158a18;
+    --green-soft: #e9f8ea;
+    --warn: #b85c00;
+    --warn-soft: #fff4e5;
+    --ink: #1b2127;
+    --muted: #6b757e;
+    --line: #dfe3e6;
+    --bg-alt: #f5f7f8;
+    --mono: ui-monospace, Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: #fff; }
+  body {
+    margin: 0 auto;
+    max-width: 820px;
+    padding: 40px 24px 60px;
+    font: 15px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    color: var(--ink);
+    background: #fff;
+  }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 16px; margin-bottom: 24px; }
+  header .lang { float: right; font-size: 13px; }
+  h1 { font-size: 30px; margin: 0 0 4px; line-height: 1.2; }
+  header p { margin: 0; color: var(--muted); }
+  h2 {
+    font-size: 21px; margin: 36px 0 12px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line); color: var(--green-dark);
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; }
+  a { color: var(--green-dark); }
+  code, pre { font-family: var(--mono); font-size: 13px; }
+  code { background: var(--bg-alt); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-alt); }
+  td:first-child { width: 36%; }
+  .note, .warn { border-left: 4px solid var(--green); background: var(--green-soft); padding: 10px 14px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+  .warn { border-color: var(--warn); background: var(--warn-soft); }
+  .note p, .warn p { margin: 0; }
+  ol.steps > li { margin-bottom: 10px; }
+  .toc ol { columns: 2; padding-left: 20px; margin: 8px 0; }
+  .ui { font-weight: 600; white-space: nowrap; }
+  dl dt { font-weight: 600; margin-top: 12px; }
+  dl dd { margin: 2px 0 0 0; }
+  footer { margin-top: 48px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+  .print-btn {
+    display: inline-block; margin-top: 12px; padding: 6px 14px; font: inherit; font-size: 13px;
+    border: 1px solid var(--green); color: var(--green-dark); background: #fff; border-radius: 6px; cursor: pointer;
+  }
+
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  @media print {
+    body { max-width: none; padding: 0; font-size: 10.5pt; }
+    h1 { font-size: 22pt; }
+    h2 { font-size: 14pt; margin-top: 20pt; break-after: avoid; }
+    h3 { break-after: avoid; }
+    a { color: inherit; text-decoration: none; }
+    .print-btn, header .lang { display: none; }
+    table, pre, .note, .warn, li, dl dt, dl dd { break-inside: avoid; }
+    tr { break-inside: avoid; }
+    .page-break { break-before: page; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="lang" href="raspberry-flash-en.html">English version</a>
+  <h1>Raspberry Flash – Guida utente</h1>
+  <p>Scrivere schede SD per Raspberry Pi da Windows · RaspberryFlash 1.1</p>
+  <button class="print-btn" onclick="window.print()">Stampa / Salva come PDF</button>
+</header>
+
+<p>Raspberry Flash scrive un'immagine Raspberry Pi su una scheda SD da Windows. Usa sempre l'ultima immagine pubblicata sul vostro server web, quindi basta conoscere l'indirizzo del server: quando viene pubblicata una nuova immagine, questa viene usata automaticamente.</p>
+
+<div class="note"><p>L'interfaccia del programma è in inglese. In questa guida i nomi di pulsanti e campi sono riportati come appaiono sullo schermo, in <strong>grassetto</strong>.</p></div>
+
+<nav class="toc">
+  <strong>Indice</strong>
+  <ol>
+    <li><a href="#requisiti">Requisiti</a></li>
+    <li><a href="#funzionamento">Come funziona</a></li>
+    <li><a href="#scrivere">Scrivere una scheda SD</a></li>
+    <li><a href="#opzioni">Opzioni</a></li>
+    <li><a href="#file">File accanto al programma</a></li>
+    <li><a href="#problemi">Risoluzione dei problemi</a></li>
+    <li><a href="#faq">Domande frequenti</a></li>
+  </ol>
+</nav>
+
+<h2 id="requisiti">1. Requisiti</h2>
+<ul>
+  <li>Windows 10 o Windows 11.</li>
+  <li>Un lettore di schede SD (integrato o USB) e una scheda SD grande almeno quanto l'immagine.</li>
+  <li>Una connessione internet la prima volta che si scarica ogni nuova immagine.</li>
+  <li><strong>Diritti di amministratore</strong>: scrivere una scheda significa accedere direttamente al disco, cosa che Windows consente solo agli amministratori. All'avvio Windows chiede l'autorizzazione (finestra UAC): rispondete <span class="ui">Sì</span>.</li>
+</ul>
+<p>Non serve installare nulla: copiate <code>RaspberryFlash.exe</code> in una cartella a scelta e avviatelo. Scegliete una cartella in cui sia possibile scrivere (ad es. <code>Documenti\RaspberryFlash</code>), perché il programma salva accanto a sé le impostazioni e le immagini scaricate.</p>
+
+<h2 id="funzionamento">2. Come funziona</h2>
+<p>L'indirizzo del server che inserite (il <em>base URL</em>) è una cartella che contiene l'immagine e un piccolo file chiamato <code>manifest.json</code> che indica qual è l'immagine corrente. Quando premete <span class="ui">Flash</span>, Raspberry Flash:</p>
+<ol>
+  <li>legge <code>manifest.json</code> dall'indirizzo base;</li>
+  <li>controlla se l'immagine indicata è già presente nella cartella locale <code>cache</code>;</li>
+  <li>se non c'è, la scarica (riprendendo un eventuale download interrotto);</li>
+  <li>cancella la scheda SD selezionata e vi scrive l'immagine;</li>
+  <li>se richiesto, rilegge la scheda per verificarla.</li>
+</ol>
+
+<h2 id="scrivere" class="page-break">3. Scrivere una scheda SD</h2>
+<p>La finestra principale contiene, dall'alto in basso:</p>
+<ul>
+  <li><span class="ui">Base URL</span> – indirizzo del server, con i pulsanti <span class="ui">Save</span> (salva) e <span class="ui">Remove</span> (rimuovi)</li>
+  <li><span class="ui">SD card</span> – la scheda da scrivere, con il pulsante <span class="ui">Refresh</span> (aggiorna)</li>
+  <li>le opzioni <span class="ui">Verify after writing</span> e <span class="ui">Show all non-system disks</span></li>
+  <li>due barre di avanzamento, <span class="ui">Download</span> e <span class="ui">Write</span> (scrittura)</li>
+  <li>una riga di stato e un registro (log) delle operazioni</li>
+  <li>i pulsanti <span class="ui">About</span>, <span class="ui">Flash</span> e <span class="ui">Cancel</span> (annulla)</li>
+</ul>
+
+<h3>Passo per passo</h3>
+<ol class="steps">
+  <li><strong>Inserite la scheda SD</strong> nel lettore.</li>
+  <li><strong>Avviate RaspberryFlash.exe</strong> e confermate la richiesta di Windows per i diritti di amministratore.</li>
+  <li><strong>Inserite il Base URL</strong> – la cartella del server che contiene <code>manifest.json</code>, ad esempio <code>https://drive.example.com/</code>.<br>
+    Premete <span class="ui">Save</span> per aggiungerlo all'elenco a discesa e ritrovarlo la volta successiva. Con <span class="ui">Remove</span> eliminate dall'elenco l'indirizzo selezionato.</li>
+  <li><strong>Selezionate la scheda</strong> in <span class="ui">SD card</span>. Ogni voce mostra numero del disco, nome, capacità e tipo di collegamento, ad es.
+    <code>Disk 3: Generic STORAGE DEVICE [29.7 GB, USB]</code>. Se la scheda non compare, premete <span class="ui">Refresh</span>.
+    <div class="note"><p>Controllate la capacità: deve corrispondere alla vostra scheda SD. In caso di dubbio, togliete la scheda, premete <span class="ui">Refresh</span> e guardate quale voce scompare.</p></div></li>
+  <li><strong>Premete Flash.</strong> Un avviso indica quale disco sta per essere cancellato. Leggetelo con attenzione e premete <span class="ui">Sì</span> per continuare.
+    <div class="warn"><p><strong>Tutto il contenuto della scheda selezionata viene cancellato.</strong> L'operazione non si può annullare.</p></div></li>
+  <li><strong>Attendete.</strong> La barra <span class="ui">Download</span> si riempie durante lo scaricamento dell'immagine (appare subito piena se l'immagine è già nella cache). La barra <span class="ui">Write</span> mostra poi la scrittura e, se attiva, la verifica. Velocità e avanzamento compaiono anche nella riga di stato.</li>
+  <li>Quando compare il messaggio <strong>“SD card written successfully. You can remove it.”</strong> (scheda scritta correttamente, potete toglierla), premete <span class="ui">OK</span> ed estraete la scheda. È pronta per il Raspberry Pi.</li>
+</ol>
+<p>Per interrompere in qualsiasi momento premete <span class="ui">Cancel</span>. Un download annullato riprende la volta successiva; una scrittura annullata lascia la scheda inutilizzabile finché non viene riscritta.</p>
+<div class="note"><p>Dopo la scrittura Windows potrebbe mostrare <em>“È necessario formattare il disco prima di poterlo usare”</em>. È normale: il Raspberry Pi usa partizioni che Windows non sa leggere. Premete <span class="ui">Annulla</span> – <strong>non formattate</strong>.</p></div>
+
+<h3>Scrivere più schede</h3>
+<p>Inserite la scheda successiva, premete <span class="ui">Refresh</span>, selezionatela e premete <span class="ui">Flash</span>. L'immagine viene scaricata una sola volta e poi riutilizzata dalla cache.</p>
+
+<h2 id="opzioni">4. Opzioni</h2>
+<dl>
+  <dt>Verify after writing – verifica dopo la scrittura (attiva di default, consigliata)</dt>
+  <dd>Dopo la scrittura il programma rilegge l'intera scheda e la confronta con l'immagine. Il tempo totale circa raddoppia, ma si individuano schede difettose o contraffatte prima di montarle in un dispositivo. L'impostazione viene ricordata.</dd>
+  <dt>Show all non-system disks – mostra tutti i dischi non di sistema</dt>
+  <dd>Normalmente vengono elencati solo i dischi USB, SD e MMC. Attivatela se il vostro lettore non viene riconosciuto come tale (alcuni lettori integrati). Il disco di sistema di Windows non viene mai elencato, ma altri dischi interni o esterni sì: <strong>assicuratevi di selezionare quello giusto.</strong></dd>
+  <dt>Link diretto all'immagine</dt>
+  <dd>Al posto dell'indirizzo base si può inserire il link diretto a un file immagine che termina con <code>.img</code>, <code>.img.xz</code>, <code>.img.gz</code>, <code>.img.bz2</code> o <code>.zip</code>. Le immagini compresse vengono decompresse durante la scrittura; non serve estrarle prima.</dd>
+  <dt>About</dt>
+  <dd>Mostra la revisione del programma e i contatti.</dd>
+</dl>
+
+<h2 id="file">5. File accanto al programma</h2>
+<table>
+  <tr><th>File / cartella</th><th>Contenuto</th></tr>
+  <tr><td><code>cache\</code></td><td>Immagini scaricate. Eliminate quelle vecchie per liberare spazio; se servono vengono riscaricate.</td></tr>
+  <tr><td><code>cache\*.part</code>, <code>*.part.json</code></td><td>Un download non completato. Premendo <span class="ui">Flash</span> riprende.</td></tr>
+  <tr><td><code>config.json</code></td><td>Impostazioni: ultimo URL, URL salvati, opzione di verifica. Eliminatelo per ripristinare il programma.</td></tr>
+</table>
+
+<h2 id="problemi" class="page-break">6. Risoluzione dei problemi</h2>
+<table>
+  <tr><th>Messaggio / problema</th><th>Causa e soluzione</th></tr>
+  <tr><td><em>Administrator rights are required to write to the SD card.</em></td><td>È stata rifiutata la richiesta di Windows. Riavviate il programma e rispondete <span class="ui">Sì</span>; sui PC aziendali potrebbe servire un account amministratore.</td></tr>
+  <tr><td><em>No SD card found. Insert one and press Refresh.</em></td><td>Inserite la scheda, attendete qualche secondo e premete <span class="ui">Refresh</span>. Con un lettore integrato provate <span class="ui">Show all non-system disks</span>.</td></tr>
+  <tr><td><em>Please enter a valid http(s) URL.</em></td><td>L'indirizzo deve iniziare con <code>http://</code> o <code>https://</code>.</td></tr>
+  <tr><td><em>Cannot read manifest.json: HTTP 404 …</em></td><td>Base URL errato, oppure l'immagine non è ancora stata pubblicata in quella cartella. Verificate l'indirizzo con chi pubblica le immagini.</td></tr>
+  <tr><td><em>Cannot read manifest.json: …</em> (senza codice HTTP)</td><td>Nessuna connessione al server: controllate la connessione internet, il proxy o il firewall.</td></tr>
+  <tr><td><em>manifest.json is not valid JSON</em> / <em>has no "image" entry</em> / <em>Download failed: HTTP 404 …</em></td><td>Problema sul server. Avvisate chi pubblica le immagini.</td></tr>
+  <tr><td><em>Connection problem …; retrying in 5s</em></td><td>Problema di rete temporaneo; il programma riprova da solo. Se si arrende, premete di nuovo <span class="ui">Flash</span>: il download riprende da dove si era fermato.</td></tr>
+  <tr><td><em>Downloaded image is corrupted (checksum mismatch).</em></td><td>Il file scaricato era danneggiato ed è stato eliminato; premete <span class="ui">Flash</span> per riscaricarlo. Se succede sempre, avvisate chi pubblica le immagini.</td></tr>
+  <tr><td><em>Image (…) is larger than the card (…)</em></td><td>Usate una scheda SD più grande.</td></tr>
+  <tr><td><em>diskpart failed</em></td><td>La scheda è protetta da scrittura (controllate il piccolo interruttore di blocco sul lato della scheda o dell'adattatore), oppure è in uso da un altro programma. Chiudete le finestre di Esplora risorse aperte sulla scheda e riprovate.</td></tr>
+  <tr><td><em>Verification failed …</em></td><td>La scheda non ha memorizzato correttamente i dati. Riprovate; se fallisce ancora, la scheda o il lettore sono difettosi: sostituiteli.</td></tr>
+  <tr><td>Viene ancora scritta un'immagine vecchia</td><td>Eliminate l'immagine vecchia dalla cartella <code>cache</code> e premete di nuovo <span class="ui">Flash</span>.</td></tr>
+  <tr><td>Windows chiede di formattare la scheda dopo la scrittura</td><td>È normale: premete <span class="ui">Annulla</span>, non formattate.</td></tr>
+</table>
+<p>Il registro nella finestra principale mostra ogni passaggio con l'orario: è utile copiarlo quando si chiede assistenza.</p>
+
+<h2 id="faq">7. Domande frequenti</h2>
+<dl>
+  <dt>È gratuito?</dt>
+  <dd>Sì, Raspberry Flash è gratuito da scaricare e usare.</dd>
+  <dt>Come so quale versione sto scrivendo?</dt>
+  <dd>Ogni volta che premete <span class="ui">Flash</span>, il registro mostra <em>Available version: …</em> con il nome dell'immagine.</dd>
+  <dt>Posso usarlo senza connessione?</dt>
+  <dd>Per leggere <code>manifest.json</code> serve la connessione. Senza, inserite invece il link diretto all'immagine: se un file con quel nome è già nella cache, viene usato senza scaricare nulla.</dd>
+  <dt>Dopo la scrittura la scheda sembra più piccola?</dt>
+  <dd>Windows vede solo la piccola partizione di avvio, quindi la scheda sembra più piccola. La capacità completa c'è ancora ed è usata dal Raspberry Pi.</dd>
+  <dt>Come vengono pubblicate le nuove immagini?</dt>
+  <dd>Con Manifest Maker – vedere la <a href="manifest-maker-it.html">guida di Manifest Maker</a>.</dd>
+</dl>
+
+<footer>© 2026 Steplab – <a href="https://www.steplab.net">www.steplab.net</a> – <a href="mailto:info@steplab.net">info@steplab.net</a></footer>
+
+</body>
+</html>

@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Language preference: entering the English version makes it the default (cookie "en"); ?lang=it switches back -->
+    <script>
+      (function () {
+        try {
+          var q = (
+            new URLSearchParams(location.search).get("lang") || ""
+          ).toLowerCase();
+          function setLang(v) {
+            document.cookie =
+              "steplab_lang=" + v + ";path=/;max-age=31536000;samesite=lax";
+          }
+          if (q === "it") {
+            setLang("it");
+            location.replace("index.html" + location.hash);
+            return;
+          }
+          setLang("en");
+        } catch (e) {}
+      })();
+    </script>
+    <!-- Cookie Script -->
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="https://cdn.cookie-script.com/s/758f200851f59a1514125de82a571d10.js"
+    ></script>
+    <!-- End Cookie Script -->
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-N2VFL4");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>Raspberry Flash: free Raspberry Pi SD card flasher for Windows — StepLab</title>
+    <meta name="description" content="Raspberry Flash writes the latest Raspberry Pi image to SD cards in one click: it reads a manifest from your server, downloads only when the image changes, resumes interrupted downloads and verifies every card. Free download for Windows." />
+    <meta name="keywords" content="raspberry pi sd card flasher, flash raspberry pi image windows, raspberry pi imager alternative, sd card writer, img flasher, manifest.json, steplab" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="StepLab" />
+    <link rel="canonical" href="https://www.steplab.net/pages/raspberry-flash/index-en.html" />
+    <link rel="alternate" hreflang="it" href="https://www.steplab.net/pages/raspberry-flash/" />
+    <link rel="alternate" hreflang="en" href="https://www.steplab.net/pages/raspberry-flash/index-en.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.steplab.net/pages/raspberry-flash/" />
+    <meta property="og:site_name" content="StepLab" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale:alternate" content="it_IT" />
+    <meta property="og:title" content="Raspberry Flash: always the latest image on your SD cards" />
+    <meta property="og:description" content="Free Windows tools to publish Raspberry Pi images on your server and flash them to SD cards in one click." />
+    <meta property="og:url" content="https://www.steplab.net/pages/raspberry-flash/index-en.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Raspberry Flash: always the latest image on your SD cards" />
+    <meta name="twitter:description" content="Free Windows tools to publish Raspberry Pi images on your server and flash them to SD cards in one click." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "Raspberry Flash",
+            "operatingSystem": "Windows 10, Windows 11",
+            "applicationCategory": "UtilitiesApplication",
+            "softwareVersion": "1.1",
+            "downloadUrl": "https://drive.steplab.net/RaspberryFlash.exe",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+            "publisher": { "@type": "Organization", "name": "StepLab", "url": "https://www.steplab.net/" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Manifest Maker",
+            "operatingSystem": "Windows 10, Windows 11",
+            "applicationCategory": "DeveloperApplication",
+            "softwareVersion": "1.0",
+            "downloadUrl": "https://drive.steplab.net/ManifestMaker.exe",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+            "publisher": { "@type": "Organization", "name": "StepLab", "url": "https://www.steplab.net/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.steplab.net/" },
+              { "@type": "ListItem", "position": 2, "name": "Raspberry Flash", "item": "https://www.steplab.net/pages/raspberry-flash/index-en.html" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is Raspberry Flash free?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Raspberry Flash and Manifest Maker are free to download and use." }
+              },
+              {
+                "@type": "Question",
+                "name": "Why does Windows ask for administrator rights?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Writing an image to an SD card means writing the raw disk, which Windows only allows to administrators. Raspberry Flash asks for the rights when it starts. Manifest Maker does not need them." }
+              },
+              {
+                "@type": "Question",
+                "name": "Which image formats are supported?",
+                "acceptedAnswer": { "@type": "Answer", "text": ".img files, and images compressed as .img.xz, .img.gz, .img.bz2 or .zip, which are decompressed while writing." }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green: #1fae23;
+        --green-dark: #158a18;
+        --green-soft: #e9f8ea;
+        --ink: #1b2127;
+        --ink-2: #39424b;
+        --muted: #6b757e;
+        --line: #e6e9ec;
+        --bg: #ffffff;
+        --bg-alt: #f5f7f8;
+        --charcoal: #141a1f;
+        --radius: 16px;
+        --shadow-sm:
+          0 1px 2px rgba(20, 26, 31, 0.06), 0 2px 8px rgba(20, 26, 31, 0.05);
+        --shadow-md: 0 8px 30px rgba(20, 26, 31, 0.1);
+        --shadow-lg: 0 24px 60px rgba(20, 26, 31, 0.16);
+        --maxw: 1200px;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+          "Liberation Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      section {
+        position: relative;
+      }
+      section[id] {
+        scroll-margin-top: 92px;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        font-weight: 800;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--green-dark);
+        background: var(--green-soft);
+        padding: 7px 14px;
+        border-radius: 999px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        font-weight: 700;
+        font-size: 15px;
+        padding: 14px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        border: 1.5px solid transparent;
+        transition:
+          transform 0.2s var(--ease),
+          box-shadow 0.2s var(--ease),
+          background 0.2s;
+        white-space: nowrap;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: var(--green);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(31, 174, 35, 0.32);
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+        box-shadow: 0 10px 26px rgba(31, 174, 35, 0.4);
+        transform: translateY(-2px);
+      }
+      .btn-ghost {
+        background: #fff;
+        color: var(--ink);
+        border-color: var(--line);
+      }
+      .btn-ghost:hover {
+        border-color: var(--green);
+        color: var(--green-dark);
+        transform: translateY(-2px);
+      }
+      .btn-dark {
+        background: var(--ink);
+        color: #fff;
+      }
+      .btn-dark:hover {
+        background: #000;
+        transform: translateY(-2px);
+      }
+      .btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* ---------- Top bar ---------- */
+      .topbar {
+        background: var(--charcoal);
+        color: #c9d1d7;
+        font-size: 13px;
+      }
+      .topbar .wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 38px;
+        gap: 16px;
+      }
+      .topbar a {
+        color: #c9d1d7;
+        transition: color 0.2s;
+      }
+      .topbar a:hover {
+        color: #fff;
+      }
+      .topbar .tb-left {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+      }
+      .topbar .tb-left span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .topbar .tb-right {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .lang {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .lang a {
+        padding: 2px 6px;
+        border-radius: 5px;
+      }
+      .lang a.active {
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        font-weight: 600;
+      }
+      .topbar svg {
+        width: 14px;
+        height: 14px;
+        opacity: 0.8;
+      }
+
+      /* ---------- Header / Nav ---------- */
+      header.site {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        transition: box-shadow 0.3s;
+      }
+      header.site.scrolled {
+        box-shadow: var(--shadow-sm);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 76px;
+        gap: 24px;
+      }
+      .brand img {
+        height: 40px;
+        width: auto;
+      }
+      .nav-links {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .nav-links a {
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--ink-2);
+        padding: 10px 14px;
+        border-radius: 9px;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green-dark);
+        background: var(--green-soft);
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        color: var(--ink-2);
+        transition:
+          background 0.2s,
+          color 0.2s;
+        position: relative;
+      }
+      .icon-btn:hover {
+        background: var(--bg-alt);
+        color: var(--green-dark);
+      }
+      .icon-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+      .burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+      .burger span {
+        width: 22px;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        position: relative;
+        padding: 56px 0 72px;
+        background: linear-gradient(180deg, var(--bg-alt) 0%, #fff 100%);
+        overflow: hidden;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 4.6vw, 54px);
+        font-weight: 900;
+        color: var(--ink);
+        margin-top: 18px;
+      }
+      .hero h1 .hl {
+        color: var(--green);
+      }
+      .hero p.lead {
+        font-size: 19px;
+        color: var(--ink-2);
+        margin: 22px 0 30px;
+        max-width: 560px;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 34px;
+        margin-top: 44px;
+        flex-wrap: wrap;
+      }
+      .hero-stats .stat b {
+        display: block;
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+      }
+      .hero-stats .stat span {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .crumbs {
+        font-size: 13.5px;
+        color: var(--muted);
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .crumbs a:hover {
+        color: var(--green-dark);
+      }
+      .crumbs span {
+        opacity: 0.5;
+      }
+
+      /* app window mock-up */
+      .hero-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow-lg);
+        padding: 22px;
+      }
+      .app {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--bg-alt);
+        font-size: 14px;
+      }
+      .app-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        font-weight: 600;
+        color: var(--ink-2);
+      }
+      .app-title .dots {
+        display: flex;
+        gap: 6px;
+      }
+      .app-title .dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--line);
+      }
+      .app-body {
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 11px 12px;
+        align-items: center;
+      }
+      .app-body label {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .app-field {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 7px 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .app-field.mono {
+        font-family: var(--mono);
+        font-size: 12.5px;
+      }
+      .bar {
+        height: 10px;
+        border-radius: 6px;
+        background: var(--line);
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--green);
+        border-radius: 6px;
+      }
+      .app-log {
+        margin: 0 16px;
+        background: var(--charcoal);
+        color: #dfe6ea;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .app-log .ok {
+        color: #4bde5a;
+      }
+      .app-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px 16px;
+      }
+      .app-foot .chk {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--ink-2);
+      }
+      .app-foot .chk i {
+        width: 15px;
+        height: 15px;
+        border-radius: 4px;
+        background: var(--green);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .app-foot .chk svg {
+        width: 11px;
+        height: 11px;
+        color: #fff;
+      }
+      .app-foot .flash {
+        background: var(--green);
+        color: #fff;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 7px 22px;
+      }
+
+      /* ---------- Sections ---------- */
+      .sec {
+        padding: 88px 0;
+      }
+      .sec.alt {
+        background: var(--bg-alt);
+      }
+      .sec-head {
+        max-width: 680px;
+        margin-bottom: 52px;
+      }
+      .sec-head.center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .sec-head h2 {
+        font-size: clamp(28px, 3.4vw, 42px);
+        margin: 16px 0 14px;
+        color: var(--ink);
+      }
+      .sec-head p {
+        font-size: 17px;
+        color: var(--muted);
+      }
+
+      /* tool cards */
+      .tools {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .tool {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.3s var(--ease),
+          box-shadow 0.3s var(--ease),
+          border-color 0.3s;
+      }
+      .tool:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+        border-color: transparent;
+      }
+      .tool .t-ico {
+        width: 52px;
+        height: 52px;
+        border-radius: 13px;
+        background: var(--green-soft);
+        color: var(--green-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 18px;
+      }
+      .tool .t-ico svg {
+        width: 26px;
+        height: 26px;
+      }
+      .tool h3 {
+        font-size: 22px;
+        margin-bottom: 4px;
+      }
+      .tool .t-meta {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .tool > p {
+        font-size: 15.5px;
+        color: var(--ink-2);
+      }
+      .tool ul {
+        list-style: none;
+        display: grid;
+        gap: 9px;
+        margin: 20px 0 26px;
+      }
+      .tool li {
+        display: flex;
+        gap: 10px;
+        font-size: 15px;
+        color: var(--ink-2);
+      }
+      .tool li svg {
+        flex: 0 0 18px;
+        width: 18px;
+        height: 18px;
+        margin-top: 3px;
+        color: var(--green);
+      }
+      .tool .btn {
+        margin-top: auto;
+        align-self: flex-start;
+      }
+
+      /* steps */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+        counter-reset: step;
+      }
+      .step {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 28px;
+      }
+      .step .num {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--green);
+        color: #fff;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .step h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .step p {
+        font-size: 15px;
+        color: var(--muted);
+      }
+
+      /* how-to text */
+      .art {
+        max-width: 820px;
+      }
+      .art h3 {
+        font-size: 21px;
+        margin: 36px 0 12px;
+      }
+      .art h3:first-child {
+        margin-top: 0;
+      }
+      .art > p {
+        font-size: 17px;
+        color: var(--ink-2);
+        margin-bottom: 16px;
+      }
+      .art ol {
+        padding-left: 22px;
+        display: grid;
+        gap: 10px;
+        font-size: 16.5px;
+        color: var(--ink-2);
+      }
+      .art ol li::marker {
+        color: var(--green-dark);
+        font-weight: 700;
+      }
+      .mono {
+        font-family: var(--mono);
+        font-size: 0.92em;
+        background: var(--bg-alt);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 1px 6px;
+      }
+      .code {
+        background: var(--charcoal);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin: 26px 0;
+        box-shadow: var(--shadow-md);
+      }
+      .code > .code-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 13px 20px;
+        background: #1a222a;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #9aa4ac;
+      }
+      .code > .code-head span:last-child {
+        color: #4bde5a;
+      }
+      pre {
+        margin: 0;
+        padding: 20px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: #dfe6ea;
+      }
+      .k {
+        color: #4bde5a;
+      }
+      .n {
+        color: #e8c06a;
+      }
+      .note {
+        background: var(--green-soft);
+        border: 1px solid rgba(31, 174, 35, 0.28);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin: 26px 0;
+        color: var(--ink-2);
+        font-size: 16px;
+      }
+      .note b.tag {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--green-dark);
+        margin-bottom: 7px;
+      }
+
+      /* FAQ */
+      .faq {
+        display: grid;
+        gap: 12px;
+        max-width: 820px;
+      }
+      .faq details {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px 22px;
+        box-shadow: var(--shadow-sm);
+      }
+      .faq summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+        list-style: none;
+        font-weight: 700;
+        font-size: 16.5px;
+        color: var(--ink);
+      }
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq summary::after {
+        content: "+";
+        color: var(--green);
+        font-weight: 800;
+        font-size: 22px;
+        line-height: 1;
+        flex: 0 0 auto;
+      }
+      .faq details[open] summary::after {
+        content: "\2013";
+      }
+      .faq details p {
+        margin-top: 12px;
+        color: var(--ink-2);
+        font-size: 16px;
+      }
+
+      /* CTA */
+      .cta {
+        padding: 76px 0;
+      }
+      .cta-box {
+        background: linear-gradient(120deg, var(--green), var(--green-dark));
+        border-radius: 26px;
+        padding: 56px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+      .cta-box::before {
+        content: "";
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        top: -120px;
+        right: -80px;
+      }
+      .cta-box::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        bottom: -100px;
+        left: -40px;
+      }
+      .cta-box h2 {
+        font-size: clamp(28px, 3.5vw, 40px);
+        position: relative;
+      }
+      .cta-box p {
+        font-size: 18px;
+        opacity: 0.95;
+        margin: 16px auto 30px;
+        max-width: 560px;
+        position: relative;
+      }
+      .cta-box .hero-cta {
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+      .cta-box .btn-ghost {
+        background: #fff;
+        color: var(--green-dark);
+        border-color: #fff;
+      }
+      .cta-box .btn-dark {
+        background: var(--charcoal);
+      }
+
+      /* ---------- Footer ---------- */
+      footer.site {
+        background: var(--charcoal);
+        color: #9aa4ac;
+        padding: 64px 0 30px;
+        font-size: 14.5px;
+      }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr 1fr 1fr;
+        gap: 36px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .foot-brand img {
+        height: 38px;
+        filter: brightness(0) invert(1);
+        margin-bottom: 16px;
+        opacity: 0.95;
+      }
+      .foot-brand p {
+        max-width: 300px;
+        color: #828d95;
+      }
+      footer.site h4 {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      footer.site ul {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+      footer.site ul a {
+        color: #9aa4ac;
+        transition: color 0.2s;
+      }
+      footer.site ul a:hover {
+        color: var(--green);
+      }
+      .foot-bottom {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding-top: 24px;
+        flex-wrap: wrap;
+        color: #6d777f;
+        font-size: 13px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s var(--ease),
+          transform 0.7s var(--ease);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 960px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .hero-visual {
+          max-width: 520px;
+        }
+        .steps,
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .nav-links {
+          position: fixed;
+          inset: 76px 0 auto 0;
+          background: #fff;
+          flex-direction: column;
+          align-items: stretch;
+          padding: 16px 24px;
+          border-bottom: 1px solid var(--line);
+          box-shadow: var(--shadow-md);
+          transform: translateY(-140%);
+          transition: transform 0.35s var(--ease);
+          gap: 2px;
+        }
+        .nav-links.open {
+          transform: none;
+        }
+        .nav-links a {
+          padding: 14px;
+        }
+        .burger {
+          display: flex;
+        }
+        .nav-actions .hide-sm,
+        .topbar .tb-left span.hide-sm {
+          display: none;
+        }
+        .sec {
+          padding: 60px 0;
+        }
+        .hero {
+          padding: 36px 0 52px;
+        }
+        .tools,
+        .steps {
+          grid-template-columns: 1fr;
+        }
+        .tool {
+          padding: 26px;
+        }
+        .cta-box {
+          padding: 40px 26px;
+        }
+        .btn {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-N2VFL4"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="topbar">
+      <div class="wrap">
+        <div class="tb-left">
+          <span
+            ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg
+            >(+39) 351 838 6453</span
+          >
+          <span class="hide-sm"
+            ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 4h16v16H4z" />
+              <path d="m4 6 8 6 8-6" /></svg
+            >support@steplab.net</span
+          >
+        </div>
+        <div class="tb-right">
+          <span class="lang"
+            ><a href="index.html?lang=it">IT</a
+            ><span style="opacity: 0.4">/</span
+            ><a href="index-en.html" class="active">EN</a></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="site" id="site-header">
+      <div class="wrap nav">
+        <a href="https://www.steplab.net/?lang=en" class="brand" aria-label="StepLab home"
+          ><img
+            src="https://www.steplab.net/wp-content/uploads/2021/06/logo-200x40-1.png"
+            alt="StepLab"
+        /></a>
+        <nav class="nav-links" id="navlinks">
+          <a href="https://www.steplab.net/?lang=en#servizi">Services</a>
+          <a href="https://www.steplab.net/catalogo-prodotti/?lang=en">Products</a>
+          <a href="https://www.steplab.net/?lang=en#processo">How we work</a>
+          <a href="https://www.steplab.net/chi-siamo/?lang=en">About us</a>
+          <a href="https://www.steplab.net/contatti/?lang=en">Contacts</a>
+        </nav>
+        <div class="nav-actions">
+          <a href="#download" class="btn btn-primary hide-sm">Free download</a>
+          <button class="burger" id="burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="crumbs">
+            <a href="https://www.steplab.net/?lang=en">Home</a><span>/</span>
+            Raspberry Flash
+          </div>
+          <span class="eyebrow">Free software · Windows</span>
+          <h1>Always the latest image on your <span class="hl">Raspberry Pi</span> SD cards</h1>
+          <p class="lead">
+            Raspberry Flash checks your server for the current image, downloads
+            it only when it has changed and writes it to the SD card in one
+            click. Manifest Maker publishes a new version in seconds.
+          </p>
+          <div class="hero-cta">
+            <a href="https://drive.steplab.net/RaspberryFlash.exe" class="btn btn-primary" download
+              ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M4 21h16" /></svg
+              >Download Raspberry Flash</a
+            >
+            <a href="https://drive.steplab.net/ManifestMaker.exe" class="btn btn-ghost" download
+              >Download Manifest Maker</a
+            >
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><b>Free</b><span>No licence, no account</span></div>
+            <div class="stat"><b>Windows</b><span>10 and 11</span></div>
+            <div class="stat"><b>1 file</b><span>Nothing to install</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card" role="img" aria-label="Raspberry Flash window writing an image to an SD card">
+            <div class="app" aria-hidden="true">
+              <div class="app-title">
+                <span>Raspberry Flash</span>
+                <span class="dots"><i></i><i></i><i></i></span>
+              </div>
+              <div class="app-body">
+                <label>Base URL</label>
+                <div class="app-field mono">https://your-server.com/images/</div>
+                <label>SD card</label>
+                <div class="app-field">Disk 2: SD Card Reader (29.7 GB, USB)</div>
+                <label>Download</label>
+                <div class="bar"><i style="width: 100%"></i></div>
+                <label>Write</label>
+                <div class="bar"><i style="width: 64%"></i></div>
+              </div>
+              <div class="app-log">
+                Available version: 231026<br />
+                Using cached image solaria231026.img<br />
+                <span class="ok">Writing 1.9 GB / 3.0 GB (38.2 MB/s)</span>
+              </div>
+              <div class="app-foot">
+                <span class="chk"
+                  ><i
+                    ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10" /></svg></i
+                  >Verify after writing</span
+                >
+                <span class="flash">Flash</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THE TOOLS ============ -->
+    <section class="sec alt" id="download">
+      <div class="wrap">
+        <div class="sec-head center reveal">
+          <span class="eyebrow">Two tools</span>
+          <h2>One to flash, one to publish</h2>
+          <p>
+            Both are single .exe files: download, double-click, done. Free for
+            personal and professional use.
+          </p>
+        </div>
+        <div class="tools">
+          <article class="tool reveal">
+            <div class="t-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" /><path d="M8 2v4M11 2v4M14 2v4" /><path d="m13 11-3 4h4l-3 4" />
+              </svg>
+            </div>
+            <h3>Raspberry Flash</h3>
+            <div class="t-meta">Version 1.1 · Windows 10/11 · needs administrator rights</div>
+            <p>
+              Writes Raspberry Pi images to SD cards. Enter your server once and
+              every card gets the version that is current right now.
+            </p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Reads <span class="mono">manifest.json</span> and downloads a new image only when it changes</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Resumes interrupted downloads where they stopped</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Reads every card back and checks it against the image</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Handles .img, .img.xz, .img.gz, .img.bz2 and .zip</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Lists only USB and SD card readers, never your system disk</li>
+            </ul>
+            <a href="https://drive.steplab.net/RaspberryFlash.exe" class="btn btn-primary" download
+              ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M4 21h16" /></svg
+              >Download RaspberryFlash.exe</a
+            >
+          </article>
+
+          <article class="tool reveal">
+            <div class="t-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M10 13l-2 2 2 2" /><path d="m14 13 2 2-2 2" />
+              </svg>
+            </div>
+            <h3>Manifest Maker</h3>
+            <div class="t-meta">Version 1.0 · Windows 10/11 · no administrator rights</div>
+            <p>
+              Creates the <span class="mono">manifest.json</span> that tells
+              Raspberry Flash which image is current. Pick the image, save, upload.
+            </p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Fills in the version from the file name</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Adds a SHA-256 checksum so corrupted downloads are caught</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Saves next to the image, ready to upload</li>
+            </ul>
+            <a href="https://drive.steplab.net/ManifestMaker.exe" class="btn btn-primary" download
+              ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M4 21h16" /></svg
+              >Download ManifestMaker.exe</a
+            >
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="sec" id="how-it-works">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>Publish once, flash everywhere</h2>
+          <p>
+            Your images live on any web server. A small manifest next to them
+            says which one is current.
+          </p>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="num">1</div>
+            <h3>Upload the image</h3>
+            <p>Put the new .img on your server, with a new file name for each version.</p>
+          </div>
+          <div class="step reveal">
+            <div class="num">2</div>
+            <h3>Create the manifest</h3>
+            <p>Run Manifest Maker on the same image and upload the manifest.json it saves.</p>
+          </div>
+          <div class="step reveal">
+            <div class="num">3</div>
+            <h3>Flash</h3>
+            <p>Raspberry Flash sees the new version, downloads it once and writes every card from then on.</p>
+          </div>
+        </div>
+
+        <div class="art reveal" style="margin-top: 56px">
+          <p>The server folder holds the images and one manifest:</p>
+          <div class="code">
+            <div class="code-head"><span>manifest.json</span><span>JSON</span></div>
+            <pre><code>{
+  <span class="k">"version"</span>: <span class="n">"231026"</span>,
+  <span class="k">"image"</span>: <span class="n">"solaria231026.img"</span>,
+  <span class="k">"sha256"</span>: <span class="n">"3f5a…"</span>
+}</code></pre>
+          </div>
+          <p>
+            <span class="mono">image</span> is the file name in the same folder
+            (or a full link). <span class="mono">sha256</span> is optional: when
+            present, the image is checked after downloading.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GUIDE ============ -->
+    <section class="sec alt" id="guide">
+      <div class="wrap">
+        <div class="art reveal">
+          <span class="eyebrow">Step by step</span>
+          <h3 style="margin-top: 18px">Flashing an SD card</h3>
+          <ol>
+            <li>Insert the SD card and start <b>RaspberryFlash.exe</b>. Accept the administrator request.</li>
+            <li>In <b>Base URL</b>, enter the folder that holds your images, e.g. <span class="mono">https://your-server.com/images/</span>. Press <b>Save</b> to keep it in the list.</li>
+            <li>Select the card in <b>SD card</b>. Press <b>Refresh</b> if it is not listed.</li>
+            <li>Press <b>Flash</b> and confirm. Everything on the selected card is erased.</li>
+            <li>Wait for <i>“SD card written successfully”</i>, then remove the card.</li>
+          </ol>
+
+          <div class="note">
+            <b class="tag">Good to know</b>
+            Downloaded images are kept in the <span class="mono">cache</span>
+            folder next to the program, so the next card is written straight
+            away. Delete old images there to free disk space.
+          </div>
+
+          <h3>Publishing a new image</h3>
+          <ol>
+            <li>Upload the new image to the server folder with a <b>new file name</b>, e.g. <span class="mono">solaria151126.img</span>.</li>
+            <li>Start <b>ManifestMaker.exe</b> and press <b>Browse…</b> to select the same image on your PC.</li>
+            <li>Check the <b>Version</b> and keep <b>Include SHA-256 checksum</b> ticked.</li>
+            <li>Press <b>Create manifest</b>, then upload <span class="mono">manifest.json</span> to the server folder, replacing the old one.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="sec" id="faq">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Is it really free?</summary>
+            <p>Yes. Raspberry Flash and Manifest Maker are free to download and use, with no account or licence key.</p>
+          </details>
+          <details>
+            <summary>Windows says “Windows protected your PC”. Is that normal?</summary>
+            <p>Windows SmartScreen shows this for programs it has not seen often. Click <b>More info</b>, then <b>Run anyway</b>. Download the files only from this page.</p>
+          </details>
+          <details>
+            <summary>Why does Raspberry Flash need administrator rights?</summary>
+            <p>Writing an image means writing the SD card directly, which Windows only allows to administrators. Manifest Maker does not need them.</p>
+          </details>
+          <details>
+            <summary>Can I use a direct link instead of a manifest?</summary>
+            <p>Yes. A link that ends in .img, .img.xz, .img.gz, .img.bz2 or .zip is downloaded and written directly, without a manifest.</p>
+          </details>
+          <details>
+            <summary>Why did it not download my new image?</summary>
+            <p>Raspberry Flash recognises an image by its file name. If the new image has the same name as one already in the cache, the cached copy is used. Give each version a new name and update the manifest.</p>
+          </details>
+          <details>
+            <summary>Verification failed. What now?</summary>
+            <p>Flash the card again. If it fails repeatedly, the card or the reader is likely faulty: try another card.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <h2>Building a Raspberry Pi or ESP32 product?</h2>
+          <p>
+            StepLab develops firmware, electronics and the tools to produce
+            them. Tell us about your project.
+          </p>
+          <div class="hero-cta">
+            <a href="https://www.steplab.net/contatti/?lang=en" class="btn btn-ghost">Contact us</a>
+            <a href="#download" class="btn btn-dark">Download the tools</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site">
+      <div class="wrap">
+        <div class="foot-grid">
+          <div class="foot-brand">
+            <img
+              src="https://www.steplab.net/wp-content/uploads/2021/06/logo-200x40-1.png"
+              alt="StepLab"
+            />
+            <p>
+              Firmware development, electronics and prototyping. From the idea
+              to the electronic product, with custom components and engineering
+              services.
+            </p>
+          </div>
+          <div>
+            <h4>Services</h4>
+            <ul>
+              <li><a href="https://www.steplab.net/?lang=en#servizi">Firmware development</a></li>
+              <li><a href="https://www.steplab.net/?lang=en#servizi">Hardware design</a></li>
+              <li><a href="https://www.steplab.net/?lang=en#servizi">Engineering</a></li>
+              <li><a href="https://www.steplab.net/?lang=en#servizi">Test equipment</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Software</h4>
+            <ul>
+              <li><a href="https://drive.steplab.net/RaspberryFlash.exe" download>Raspberry Flash</a></li>
+              <li><a href="https://drive.steplab.net/ManifestMaker.exe" download>Manifest Maker</a></li>
+              <li><a href="#guide">User guide</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contacts</h4>
+            <ul>
+              <li><a href="tel:+393518386453">(+39) 351 838 6453</a></li>
+              <li><a href="mailto:info@steplab.net">info@steplab.net</a></li>
+              <li><a href="https://www.steplab.net/chi-siamo/?lang=en">About us</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-bottom">
+          <span>© 2014-2026 StepLab — VAT IT01154910259. All rights reserved.</span>
+          <span>Privacy · Cookie · Terms</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // sticky header shadow
+      const header = document.getElementById("site-header");
+      const onScroll = () =>
+        header.classList.toggle("scrolled", window.scrollY > 8);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // mobile menu
+      const burger = document.getElementById("burger");
+      const links = document.getElementById("navlinks");
+      burger.addEventListener("click", () => links.classList.toggle("open"));
+      links
+        .querySelectorAll("a")
+        .forEach((a) =>
+          a.addEventListener("click", () => links.classList.remove("open")),
+        );
+
+      // reveal on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+
+    <!-- StepLab AI chat — floating bubble, loaded from the CDN -->
+    <script src="https://cdn.steplab.net/cbot/steplab-chat.js" defer></script>
+  </body>
+</html>
